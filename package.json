@@ -8,13 +8,11 @@
     "start:prod": "node index.js"
   },
   "dependencies": {
-    "@mliebelt/pgn-parser": "^1.1.1",
     "chess.js": "^0.11.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "fenify": "^0.0.2",
     "nodemon": "^2.0.4",
-    "pgn-parser": "^2.0.0",
     "process": "^0.11.10",
     "sftp-watcher": "^2.0.5",
     "socket.io": "^2.3.0",

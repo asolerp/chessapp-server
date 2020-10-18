@@ -2,8 +2,6 @@ let EventEmitter = require('events').EventEmitter,
     Client = require('ssh2').Client;
 
 const { Chess } = require('chess.js')
-const parser = require('@mliebelt/pgn-parser')
-const pgnParser = require('pgn-parser');
 
 
 module.exports = function(config) {

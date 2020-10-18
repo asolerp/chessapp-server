@@ -13,10 +13,12 @@ const index = require("./routes/index");
 const event = new SftpClient()
 const app = express();
 
-app.use(index);
-
 const server = http.createServer(app);
 const io = socketIo(server);
+
+app.use(index);
+app.set('socketio', io);
+
 
 io.on("connection", (socket) => {
   console.log("New client connected");
