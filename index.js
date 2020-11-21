@@ -1,31 +1,21 @@
 require('dotenv').config()
 
 const process = require('process');
-const express = require("express");
-const http = require("http");
 
-const socketIo = require("socket.io");
+
 const SftpClient = require('./utils/sftpClient')
 
-const index = require("./routes/index");
-
-
 const event = new SftpClient()
-const app = express();
 
-const server = http.createServer(app);
-const io = socketIo(server);
+const { logger } = require('./utils/logger')
 
-app.use(index);
-app.set('socketio', io);
+// App - Expresss
+const { app, io } = require('./app')
+
+// MongoDB connection
+const { connectDb } = require('./db/index') 
 
 
-io.on("connection", (socket) => {
-  console.log("New client connected");
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
-});
 
 event.con.on("upload", function (data) {
   console.log("uploading....")
@@ -50,9 +40,6 @@ process.on('SIGTERM', function onSigterm() {
   app.shutdown();
 });
 
-app.shutdown = function () {
-  // clean up your resources and exit 
-  process.exit();
-};
-
-server.listen(process.env.PORT || 4003, () => console.log(`Listening on port ${process.env.PORT}`));
+connectDb().then(async () => {
+  app.listen(process.env.PORT || 4003, () => logger.info(`<<< Listening on port ${process.env.PORT} >>>`));
+});

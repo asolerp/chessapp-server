@@ -2,13 +2,12 @@
 # No bash, can still use once confident
 # FROM node:alpine
 
-FROM node
-RUN npm install -g nodemon
+FROM node:current-alpine
 
 RUN mkdir -p /app/server
+
 WORKDIR /app/server
-
-
+s
 COPY package*.json /app/server/
 
 RUN npm install

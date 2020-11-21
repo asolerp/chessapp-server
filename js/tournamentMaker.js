@@ -1,6 +1,6 @@
 const { Chess } = require('chess.js')
 
-export const tournamentMaker = (games) => {
+const tournamentMaker = (games) => {
 
     let tournament = []
     
@@ -37,4 +37,8 @@ export const tournamentMaker = (games) => {
     
     return tournament
 
+}
+
+module.exports = {
+  tournamentMaker
 }

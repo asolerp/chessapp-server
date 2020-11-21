@@ -1,6 +1,6 @@
 const { tournamentMaker } = require('./tournamentMaker')
 
-export const fileWatcher = function(sftp, folder, event) {
+const fileWatcher = function(sftp, folder, event) {
     let job = function(baseObjList) {
             folderObjList = {};
             sftp.readdir(folder, function(err, objList) {
@@ -18,7 +18,7 @@ export const fileWatcher = function(sftp, folder, event) {
                             } else if (baseObjList[fileObj.filename].status == "uploading") {
                                 if (fileObj.attrs.size == baseObjList[fileObj.filename].attrs.size) {
                                     if (baseObjList[fileObj.filename].filename === 'games.pgn') {                            
-                                        let sourceFile = sftp.createReadStream(config.path + '/' + fileObj.filename)
+                                        let sourceFile = sftp.createReadStream(folder + '/' + fileObj.filename)
                                         sourceFile.on('data', (data) => {
                                                                  
                                             // Split games into an array
@@ -49,7 +49,7 @@ export const fileWatcher = function(sftp, folder, event) {
                                 event.emit("delete", {
                                     host: config.host,
                                     user: config.username,
-                                    folder: config.path,
+                                    folder: folder,
                                     file: baseObjList[filename]
                                 });
                             }
@@ -65,3 +65,7 @@ export const fileWatcher = function(sftp, folder, event) {
     }, 500);
 
 };
+
+module.exports = {
+    fileWatcher
+}
